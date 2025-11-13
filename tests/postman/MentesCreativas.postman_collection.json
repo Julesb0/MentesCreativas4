@@ -1,0 +1,17 @@
+{
+  "info": {
+    "name": "Mentes Creativas Collection",
+    "description": "Test collection for Mentes Creativas API"
+  },
+  "item": [
+    {
+      "name": "Sistema Solar API",
+      "request": {
+        "url": "http://localhost:5000/api/planetas",
+        "method": "GET"
+      },
+      "response": []
+    }
+  ]
+}
+ 
