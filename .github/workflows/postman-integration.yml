@@ -1,0 +1,19 @@
+name: Postman Collection
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  postman-collection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Postman Collection
+        run: newman run tests/postman/MentesCreativas.postman_collection.json

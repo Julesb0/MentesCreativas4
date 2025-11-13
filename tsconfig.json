@@ -17,6 +17,7 @@
 
     /* JSX/React */
     "jsx": "react-jsx",
+    "types": ["jest", "@testing-library/jest-dom", "@react-three/fiber"],
 
     /* Linting */
     "strict": true,
