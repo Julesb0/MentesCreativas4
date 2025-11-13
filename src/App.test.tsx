@@ -1,10 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renderiza el título principal (heading)", () => {
-  render(<App />);
-  // Busca el heading principal por rol para evitar la coincidencia con el footer
-  expect(
-    screen.getByRole("heading", { name: /Colegio Mentes Creativas/i })
-  ).toBeInTheDocument();
+describe("App", () => {
+  it("muestra el encabezado principal y los enlaces de navegación", () => {
+    render(<App />);
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Laboratorio STEAM Interactivo/i })
+    ).toBeInTheDocument();
+
+    expect(screen.getAllByRole("link", { name: /Sistema Solar/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /Formas 3D/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /Energía/i }).length).toBeGreaterThan(0);
+  });
 });
