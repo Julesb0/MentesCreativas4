@@ -1,0 +1,128 @@
+import { useMemo, useState } from "react";
+import SolarScene from "../scenes/SolarScene";
+
+const PLANETS = [
+  {
+    name: "Mercurio",
+    color: "#f97316",
+    size: 0.7,
+    orbitRadius: 6,
+    speed: 0.8,
+    description: "Planeta rocoso y más cercano al Sol, con temperaturas extremas.",
+    yearLength: 88,
+    dayLength: 59,
+    radius: 2440,
+  },
+  {
+    name: "Venus",
+    color: "#facc15",
+    size: 1.1,
+    orbitRadius: 9,
+    speed: 0.55,
+    description: "Cuerpo cubierto de nubes densas que generan el efecto invernadero más intenso.",
+    yearLength: 225,
+    dayLength: 243,
+    radius: 6052,
+  },
+  {
+    name: "Tierra",
+    color: "#38bdf8",
+    size: 1.2,
+    orbitRadius: 12,
+    speed: 0.4,
+    description: "Nuestro planeta azul, único conocido con vida y grandes cantidades de agua líquida.",
+    yearLength: 365,
+    dayLength: 1,
+    radius: 6371,
+  },
+];
+
+export default function SolarView() {
+  const [selectedPlanet, setSelectedPlanet] = useState<string>(PLANETS[2].name);
+  const activePlanet = useMemo(
+    () => PLANETS.find((planet) => planet.name === selectedPlanet) ?? PLANETS[0],
+    [selectedPlanet],
+  );
+
+  return (
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
+      <section className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-blue-900/30">
+        <header className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 bg-gradient-to-r from-blue-600/40 via-blue-500/20 to-transparent px-6 py-5">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-blue-100/80">Exploración espacial</p>
+            <h2 className="text-2xl font-semibold text-white">Sistema Solar en movimiento</h2>
+          </div>
+          <p className="text-sm text-blue-100/70">
+            Pulsa sobre un planeta o selecciónalo desde la lista para ver sus datos principales.
+          </p>
+        </header>
+        <div className="h-[540px] bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+          <SolarScene
+            planets={PLANETS}
+            selectedPlanet={selectedPlanet}
+            onPlanetSelect={setSelectedPlanet}
+          />
+        </div>
+      </section>
+      <aside
+        className="flex flex-col gap-6 rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-blue-900/30"
+        aria-label="Información del planeta seleccionado"
+      >
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-200/70">Ficha interactiva</p>
+          <h3 className="text-3xl font-semibold text-white">{activePlanet.name}</h3>
+          <p className="mt-2 text-sm text-slate-200/80">{activePlanet.description}</p>
+        </div>
+        <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Selecciona un planeta">
+          {PLANETS.map((planet) => (
+            <button
+              key={planet.name}
+              type="button"
+              role="radio"
+              aria-checked={planet.name === selectedPlanet}
+              onClick={() => setSelectedPlanet(planet.name)}
+              className={[
+                "flex-1 min-w-[120px] rounded-2xl border px-4 py-3 text-left transition",
+                planet.name === selectedPlanet
+                  ? "border-blue-300/80 bg-blue-500/30 text-white shadow-lg shadow-blue-900/40"
+                  : "border-white/10 bg-slate-900/80 text-slate-200/80 hover:border-blue-300/40",
+              ].join(" ")}
+            >
+              <span className="text-sm font-semibold">{planet.name}</span>
+              <span className="block text-xs text-slate-300/70">Radio: {planet.radius.toLocaleString()} km</span>
+            </button>
+          ))}
+        </div>
+        <dl className="grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+            <dt className="text-xs uppercase tracking-[0.3em] text-blue-100/60">Duración del año</dt>
+            <dd className="mt-1 text-2xl font-semibold text-white">{activePlanet.yearLength} días</dd>
+            <p className="mt-2 text-xs text-slate-300/60">
+              Tiempo que tarda en orbitar el Sol.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+            <dt className="text-xs uppercase tracking-[0.3em] text-blue-100/60">Duración del día</dt>
+            <dd className="mt-1 text-2xl font-semibold text-white">{activePlanet.dayLength} días</dd>
+            <p className="mt-2 text-xs text-slate-300/60">
+              Rotación completa sobre su eje.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+            <dt className="text-xs uppercase tracking-[0.3em] text-blue-100/60">Radio medio</dt>
+            <dd className="mt-1 text-2xl font-semibold text-white">{activePlanet.radius.toLocaleString()} km</dd>
+            <p className="mt-2 text-xs text-slate-300/60">Comparativo con la Tierra.</p>
+          </div>
+        </dl>
+        <div className="rounded-2xl border border-dashed border-blue-200/30 bg-blue-900/20 p-5 text-sm text-blue-100/80">
+          <p className="font-semibold text-blue-100">Preguntas para el aula</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-blue-200">
+            <li>¿Qué relación existe entre la distancia al Sol y la duración del año?</li>
+            <li>¿Cómo influye la atmósfera en la temperatura de cada planeta?</li>
+            <li>¿Qué necesitaríamos para vivir en {activePlanet.name}?</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  );
+}
