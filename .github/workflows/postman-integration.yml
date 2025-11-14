@@ -1,19 +1,74 @@
-name: Postman Collection
+name: API Integration Tests - Postman
+# 🧪 Pruebas de integración API con Postman
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * *'  # Daily at 9 AM UTC
 
 jobs:
-  postman-collection:
+  postman-tests:
+    name: 🧪 Postman Collection Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - name: Install Newman
-        run: npm install -g newman
-      - name: Run Postman Collection
-        run: newman run tests/postman/MentesCreativas.postman_collection.json
+          node-version: '20.x'
+
+      - name: 📦 Install Newman (Postman CLI)
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: 📋 Run Postman Collection
+        run: |
+          newman run tests/postman/MentesCreativas.postman_collection.json \
+            --reporters cli,html,json \
+            --reporter-htmlextra-export ./postman-report.html \
+            --reporter-json-export ./postman-report.json \
+            --timeout-request 5000 || true
+
+      - name: 📊 Upload Postman Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-report
+          path: postman-report.html
+
+      - name: 📝 Comment PR with Results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('./postman-report.json', 'utf8');
+            const data = JSON.parse(report);
+            const stats = data.run.stats;
+            
+            const comment = `## 🧪 Postman Integration Tests
+            
+- ✅ Requests: ${stats.requests.total} total
+- ✅ Passed: ${stats.requests.total - stats.requests.failed}
+- ❌ Failed: ${stats.requests.failed}
+- ⏱️ Tests: ${stats.tests.total} total
+- ✓ Passed: ${stats.tests.total - stats.tests.failed}
+- ✗ Failed: ${stats.tests.failed}
+
+[📊 Detailed Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+

@@ -37,13 +37,13 @@ jobs:
         run: npm ci
 
       - name: 🧠 Type check (TS)
-        run: npm run type-check
+        run: npx tsc --noEmit
 
       - name: 🔍 Lint (ESLint)
         run: npm run lint
 
       - name: 🧪 Run tests (Jest)
-        run: npm test -- --ci
+        run: npm test -- --ci --coverage
 
       - name: 🏗️ Build (Vite)
         run: npm run build
@@ -54,3 +54,11 @@ jobs:
         with:
           name: dist-node-${{ matrix.node-version }}
           path: dist
+
+      - name: 📊 Upload coverage
+        if: matrix.node-version == '20.x'
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
