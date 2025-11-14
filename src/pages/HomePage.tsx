@@ -2,12 +2,9 @@ export default function HomePage() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center">
-        {/* Spinner animado */}
+        {/* Estrella animada */}
         <div className="flex justify-center mb-8">
-          <div className="relative w-16 h-16">
-            <div className="absolute inset-0 rounded-full border-4 border-slate-700/30"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-500 animate-spin"></div>
-          </div>
+          <div className="text-6xl animate-bounce">⭐</div>
         </div>
 
         {/* Contenido principal */}
@@ -16,11 +13,11 @@ export default function HomePage() {
             Bienvenido a Colegio Mentes Creativas!
           </h1>
           <p className="text-lg text-slate-300">
-             Colegio Mentes Creativas te ayuda a mejorar tu entendimiento en{" "}
+            Plataforma educativa con recursos multimedia e interactivos para aprender{" "}
             <span className="text-cyan-400 font-semibold">
-              ciencias, tecnología y matemáticas
+              matemáticas, ciencias naturales y tecnología
             </span>
-            .
+            {" "}de forma lúdica y visual.
           </p>
         </div>
       </div>
