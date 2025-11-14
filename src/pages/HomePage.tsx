@@ -13,10 +13,10 @@ export default function HomePage() {
         {/* Contenido principal */}
         <div className="max-w-2xl mx-auto space-y-4">
           <h1 className="text-5xl font-bold text-white">
-            Bienvenido a Mentes Creativas!!
+            Bienvenido a Colegio Mentes Creativas!
           </h1>
           <p className="text-lg text-slate-300">
-            Mentes Creativas te ayuda a mejorar tu entendimiento en{" "}
+             Colegio Mentes Creativas te ayuda a mejorar tu entendimiento en{" "}
             <span className="text-cyan-400 font-semibold">
               ciencias, tecnología y matemáticas
             </span>

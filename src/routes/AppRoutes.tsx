@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout";
 import HomePage from "../pages/HomePage";
-// EnergyLab eliminado según requerimiento
 import Shapes3D from "../views/Shapes3D";
 import SolarSystem from "../views/SolarSystem";
 import ButterfliesView from "../domains/butterflies/pages/ButterfliesView";
