@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
-test("muestra la vista del sistema solar por defecto", () => {
+test("muestra la página de inicio por defecto", () => {
   render(<App />);
   expect(
-    screen.getByRole("heading", { level: 2, name: /Sistema Solar en movimiento/i })
+    screen.getByRole("heading", { level: 1, name: /Bienvenido a Mentes Creativas/i })
   ).toBeInTheDocument();
 });
