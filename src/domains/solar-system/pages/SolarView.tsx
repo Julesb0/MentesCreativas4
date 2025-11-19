@@ -2,7 +2,35 @@ import { useMemo, useState } from "react";
 import SolarScene from "../scenes/SolarScene";
 import Quiz from "../components/Quiz";
 
-const PLANETS = [
+type Planet = {
+  name: string;
+  color: string;
+  size: number;
+  orbitRadius: number;
+  speed: number;
+  description: string;
+  yearLength: number;
+  dayLength: number;
+  radius: number;
+  axialTilt: number;
+  rotationSpeed: number;
+  orbitalInclination: number;
+  atmosphere?: string;
+  avgTemp?: number;
+  gravity?: number;
+  atmosphereColor?: string;
+  atmosphereIntensity?: number;
+  glowColor?: string;
+  ring?: {
+    innerScale: number;
+    outerScale: number;
+    color: string;
+    opacity?: number;
+  };
+  videoId: string;
+};
+
+const PLANETS: Planet[] = [
   {
     name: "Mercurio",
     color: "#9ca3af",
@@ -283,7 +311,7 @@ export default function SolarView() {
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${(activePlanet as any).videoId}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${activePlanet.videoId}?autoplay=1`}
                 title={`Video sobre ${activePlanet.name}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
