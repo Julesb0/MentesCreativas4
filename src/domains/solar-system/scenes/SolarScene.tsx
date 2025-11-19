@@ -82,14 +82,14 @@ export default function SolarScene({ planets, selectedPlanet, onPlanetSelect }: 
 	const PLANET_SCALE = 0.45;
 	const MIN_ORBIT_GAP = 2.8;
 	const spacedPlanets = useMemo(() => {
-		let lastOuterEdge = 3;
-		return planets.map((planet) => {
+		return planets.reduce((acc, planet, index) => {
 			const visualRadius = planet.size * PLANET_SCALE;
 			const requestedOrbit = planet.orbitRadius;
+			const lastOuterEdge = index === 0 ? 3 : (acc[index - 1].orbitRadius + (acc[index - 1].size * PLANET_SCALE) / 2);
 			const safeOrbit = Math.max(requestedOrbit, lastOuterEdge + visualRadius + MIN_ORBIT_GAP);
-			lastOuterEdge = safeOrbit + visualRadius;
-			return { ...planet, orbitRadius: safeOrbit };
-		});
+			acc.push({ ...planet, orbitRadius: safeOrbit });
+			return acc;
+		}, [] as Array<typeof planets[0]>);
 	}, [planets]);
 
 	return (
