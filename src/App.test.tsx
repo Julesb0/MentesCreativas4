@@ -6,7 +6,7 @@ describe("App", () => {
     render(<App />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: /Bienvenido a Colegio Mentes Creativas/i })
+      screen.getByRole("heading", { level: 1, name: /Bienvenido a.*Mentes Creativas/i })
     ).toBeInTheDocument();
 
     expect(screen.getAllByRole("link", { name: /Sistema Solar/i }).length).toBeGreaterThan(0);

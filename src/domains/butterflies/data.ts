@@ -8,8 +8,6 @@ export type ButterflySpecies = {
   region: string; // región/hábitat principal
   nota: string; // detalle curioso
   translúcida?: boolean; // alas parcialmente transparentes
-  textureFore?: string; // textura fotográfica ala delantera
-  textureHind?: string; // textura ala trasera
 };
 
 export const SPECIES: ButterflySpecies[] = [
@@ -22,8 +20,6 @@ export const SPECIES: ButterflySpecies[] = [
     pesoMg: 500,
     region: "América del Norte (migraciones a México)",
     nota: "Viaja miles de kilómetros hasta México para pasar el invierno.",
-    textureFore: "/textures/butterflies/monarca-fore.png",
-    textureHind: "/textures/butterflies/monarca-hind.png",
   },
   {
     id: "morpho",
@@ -34,8 +30,6 @@ export const SPECIES: ButterflySpecies[] = [
     pesoMg: 800,
     region: "Selvas tropicales de Centro y Sudamérica",
     nota: "Sus alas azules brillan como un espejo cuando les da la luz.",
-    textureFore: "/textures/butterflies/morpho-fore.png",
-    textureHind: "/textures/butterflies/morpho-hind.png",
   },
   {
     id: "atlas",
@@ -46,8 +40,6 @@ export const SPECIES: ButterflySpecies[] = [
     pesoMg: 2500,
     region: "Sudeste Asiático",
     nota: "Es enorme; sus puntas parecen cabezas de serpiente para asustar.",
-    textureFore: "/textures/butterflies/atlas-fore.png",
-    textureHind: "/textures/butterflies/atlas-hind.png",
   },
   {
     id: "glasswing",
@@ -59,8 +51,6 @@ export const SPECIES: ButterflySpecies[] = [
     region: "Bosques húmedos de Centroamérica",
     nota: "Tiene alas transparentes, ¡casi invisibles!",
     translúcida: true,
-    textureFore: "/textures/butterflies/glasswing-fore.png",
-    textureHind: "/textures/butterflies/glasswing-hind.png",
   },
   {
     id: "ulysses",
@@ -71,7 +61,5 @@ export const SPECIES: ButterflySpecies[] = [
     pesoMg: 900,
     region: "Bosques tropicales de Australia y Papúa",
     nota: "Sus alas azules parecen olas brillantes en el bosque.",
-    textureFore: "/textures/butterflies/ulysses-fore.png",
-    textureHind: "/textures/butterflies/ulysses-hind.png",
   },
 ];

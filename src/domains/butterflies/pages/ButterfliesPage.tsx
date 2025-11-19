@@ -56,9 +56,6 @@ export default function ButterfliesPage() {
                   envergadura={species.envergaduraCm}
                   flapSpeed={flapSpeed}
                   showAxis={showAxis}
-                  translucent={species.translúcida === true}
-                  textureFore={species.textureFore}
-                  textureHind={species.textureHind}
                 />
               </group>
               <OrbitControls enablePan={false} enableDamping dampingFactor={0.08} minDistance={8} maxDistance={40} />

@@ -1,22 +1,19 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import { CanvasTexture, DoubleSide, Shape, TextureLoader, SRGBColorSpace } from "three";
-import type { Group, Texture } from "three";
+import { CanvasTexture, DoubleSide, Shape } from "three";
+import type { Group } from "three";
 
 export type ButterflyProps = {
   colores: string[];
   envergadura: number; // cm
   flapSpeed: number; // velocidad de aleteo
   showAxis?: boolean;
-  translucent?: boolean;
-  textureFore?: string;
-  textureHind?: string;
 };
 
 // Escala: 1 unidad ~ 1 cm para simplificar (reduciendo al scene)
 // Se compone de cuerpo central y dos alas simétricas que aletean.
 
-export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = false, translucent = false, textureFore, textureHind }: ButterflyProps) {
+export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = false }: ButterflyProps) {
   const groupRef = useRef<Group>(null);
   const leftWingRef = useRef<Group>(null);
   const rightWingRef = useRef<Group>(null);
@@ -41,9 +38,7 @@ export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = 
   ];
 
   const highlightColor = lightenColor(accentColor, 0.35);
-
-  const forePhotoTexture = usePhotoTexture(textureFore);
-  const hindPhotoTexture = usePhotoTexture(textureHind);
+  const veinColor = "#ffd700"; // Color dorado para las venas
 
   const foreWingShape = useMemo(() => {
     const shape = new Shape();
@@ -73,13 +68,13 @@ export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = 
   }, [wingSpan, wingHeight]);
 
   const wingTexture = useMemo(
-    () => forePhotoTexture ?? createWingTexture(primaryColor, accentColor, highlightColor),
-    [forePhotoTexture, primaryColor, accentColor, highlightColor],
+    () => createWingTexture(primaryColor, accentColor, highlightColor, veinColor),
+    [primaryColor, accentColor, highlightColor, veinColor],
   );
 
   const hindTexture = useMemo(
-    () => hindPhotoTexture ?? createWingTexture(lightenColor(primaryColor, 0.15), accentColor, highlightColor, { spots: 2, veins: 2 }),
-    [hindPhotoTexture, primaryColor, accentColor, highlightColor],
+    () => createWingTexture(lightenColor(primaryColor, 0.15), accentColor, highlightColor, veinColor, { spots: 2, veins: 2 }),
+    [primaryColor, accentColor, highlightColor, veinColor],
   );
 
   return (
@@ -111,33 +106,29 @@ export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = 
         <mesh castShadow position={[wingSpan * 0.05, 0, 0.02]}>
           <shapeGeometry args={[hindWingShape, 24]} />
           <meshPhysicalMaterial
-            color={primaryColor}
+            color="#d4a574"
             map={hindTexture ?? undefined}
-            transparent={translucent}
-            opacity={translucent ? 0.7 : 1}
-            roughness={0.35}
-            metalness={0.08}
-            clearcoat={0.3}
-            clearcoatRoughness={0.2}
-            sheen={0.8}
-            sheenColor={lightenColor(primaryColor, 0.2)}
+            transparent={true}
+            opacity={0.75}
+            roughness={0.45}
+            metalness={0.02}
+            clearcoat={0.25}
+            clearcoatRoughness={0.3}
             side={DoubleSide}
           />
         </mesh>
         <mesh castShadow>
           <shapeGeometry args={[foreWingShape, 32]} />
           <meshPhysicalMaterial
-            color={accentColor}
+            color="#d4a574"
             map={wingTexture ?? undefined}
-            transparent={translucent}
-            opacity={translucent ? 0.65 : 1}
-            roughness={0.28}
-            metalness={0.12}
-            clearcoat={0.45}
-            clearcoatRoughness={0.12}
-            sheen={1.2}
-            sheenColor={highlightColor}
-            ior={1.8}
+            transparent={true}
+            opacity={0.78}
+            roughness={0.4}
+            metalness={0.01}
+            clearcoat={0.2}
+            clearcoatRoughness={0.35}
+            ior={1.5}
             side={DoubleSide}
           />
         </mesh>
@@ -147,33 +138,29 @@ export default function Butterfly({ colores, envergadura, flapSpeed, showAxis = 
         <mesh castShadow position={[wingSpan * 0.05, 0, 0.02]}>
           <shapeGeometry args={[hindWingShape, 24]} />
           <meshPhysicalMaterial
-            color={primaryColor}
+            color="#d4a574"
             map={hindTexture ?? undefined}
-            transparent={translucent}
-            opacity={translucent ? 0.7 : 1}
-            roughness={0.35}
-            metalness={0.08}
-            clearcoat={0.3}
-            clearcoatRoughness={0.2}
-            sheen={0.8}
-            sheenColor={lightenColor(primaryColor, 0.2)}
+            transparent={true}
+            opacity={0.75}
+            roughness={0.45}
+            metalness={0.02}
+            clearcoat={0.25}
+            clearcoatRoughness={0.3}
             side={DoubleSide}
           />
         </mesh>
         <mesh castShadow>
           <shapeGeometry args={[foreWingShape, 32]} />
           <meshPhysicalMaterial
-            color={accentColor}
+            color="#d4a574"
             map={wingTexture ?? undefined}
-            transparent={translucent}
-            opacity={translucent ? 0.65 : 1}
-            roughness={0.28}
-            metalness={0.12}
-            clearcoat={0.45}
-            clearcoatRoughness={0.12}
-            sheen={1.2}
-            sheenColor={highlightColor}
-            ior={1.8}
+            transparent={true}
+            opacity={0.78}
+            roughness={0.4}
+            metalness={0.01}
+            clearcoat={0.2}
+            clearcoatRoughness={0.35}
+            ior={1.5}
             side={DoubleSide}
           />
         </mesh>
@@ -230,7 +217,7 @@ type WingTextureOptions = {
   veins?: number;
 };
 
-function createWingTexture(base: string, accent: string, highlight: string, options: WingTextureOptions = {}) {
+function createWingTexture(base: string, _accent: string, _highlight: string, _veinColor: string, options: WingTextureOptions = {}) {
   if (typeof document === "undefined") return undefined;
   const canvas = document.createElement("canvas");
   canvas.width = 2048;
@@ -238,133 +225,125 @@ function createWingTexture(base: string, accent: string, highlight: string, opti
   const ctx = canvas.getContext("2d");
   if (!ctx) return undefined;
 
-  // Fondo base degradado hermoso
-  const mainGradient = ctx.createLinearGradient(0, 0, 2048, 2048);
-  mainGradient.addColorStop(0, lightenColor(base, 0.3));
-  mainGradient.addColorStop(0.5, base);
-  mainGradient.addColorStop(1, darkenColor(base, 0.35));
-  ctx.fillStyle = mainGradient;
+  // FONDO: Centro translúcido blanco/crema, bordes marrones (como imagen referencia)
+  const centerGradient = ctx.createRadialGradient(1024, 1024, 300, 1024, 1024, 1500);
+  centerGradient.addColorStop(0, "#f5f1e8"); // Centro blanco crema
+  centerGradient.addColorStop(0.4, "#e8dcc8");
+  centerGradient.addColorStop(0.8, darkenColor(base, 0.3)); // Transición a marrón
+  centerGradient.addColorStop(1, darkenColor(base, 0.6)); // Bordes muy marrones
+  ctx.fillStyle = centerGradient;
   ctx.fillRect(0, 0, 2048, 2048);
 
-  // Patrón de celdas hexagonales (como en alas reales)
-  ctx.strokeStyle = darkenColor(base, 0.15);
-  ctx.lineWidth = 1;
-  ctx.globalAlpha = 0.4;
-  const cellSize = 40;
-  for (let x = 0; x < 2048; x += cellSize) {
-    for (let y = 0; y < 2048; y += cellSize) {
-      ctx.strokeRect(x, y, cellSize, cellSize);
-    }
+  // Ruido sutil para textura natural
+  const imageData = ctx.getImageData(0, 0, 2048, 2048);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const noise = Math.random() * 15 - 7.5;
+    data[i] += noise;
+    data[i + 1] += noise * 0.8;
+    data[i + 2] += noise * 0.6;
   }
-  ctx.globalAlpha = 1;
+  ctx.putImageData(imageData, 0, 0);
 
-  // Nervaduras principales elegantes
-  const veins = options.veins ?? 8;
-  ctx.strokeStyle = lightenColor(highlight, 0.1);
-  ctx.lineWidth = 4;
+  // VENAS PRINCIPALES: Líneas oscuras muy visibles emanando desde la base
+  ctx.strokeStyle = darkenColor(base, 0.7);
+  ctx.lineWidth = 8;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-  ctx.globalAlpha = 0.6;
+  ctx.globalAlpha = 0.75;
   
-  for (let i = 0; i < veins; i += 1) {
-    const t = (i + 1) / (veins + 1);
-    const controlX = 800 + Math.sin(t * Math.PI * 2) * 400;
-    const controlY = 600 - t * 450;
-    
+  // 5 venas principales tipo mariposa real
+  const mainVeins = [
+    { angle: -0.4, length: 1900 }, // izquierda
+    { angle: -0.1, length: 1950 }, // izquierda-centro
+    { angle: 0.15, length: 2000 }, // centro
+    { angle: 0.35, length: 1950 }, // derecha-centro
+    { angle: 0.6, length: 1900 },  // derecha
+  ];
+  
+  mainVeins.forEach((vein) => {
     ctx.beginPath();
-    ctx.moveTo(100, 1900);
-    ctx.quadraticCurveTo(controlX, controlY, 1900 + Math.cos(t * Math.PI) * 150, 100 + t * 350);
+    ctx.moveTo(1024, 1024); // Centro
+    const endX = 1024 + Math.cos(vein.angle) * vein.length * 0.6;
+    const endY = 1024 + Math.sin(vein.angle) * vein.length;
+    ctx.lineTo(endX, endY);
     ctx.stroke();
-  }
-
-  // Nervaduras transversales (costillas)
-  ctx.lineWidth = 2;
-  ctx.globalAlpha = 0.35;
-  ctx.strokeStyle = lightenColor(highlight, 0.05);
-  for (let i = 0; i < 20; i++) {
-    const y = (i / 20) * 1900 + 100;
-    const startX = 50 + Math.sin(i * 0.3) * 100;
-    ctx.beginPath();
-    ctx.moveTo(startX, y);
-    ctx.quadraticCurveTo(900 + Math.sin(i) * 150, y - 250, 1950 - Math.cos(i * 0.5) * 100, y);
-    ctx.stroke();
-  }
+  });
   ctx.globalAlpha = 1;
 
-  // Manchas decorativas principales
-  const spots = options.spots ?? 6;
-  
-  for (let i = 0; i < spots; i += 1) {
-    const radius = 60 + i * 35;
-    const x = 350 + i * 260;
-    const y = 450 + Math.sin(i * 0.7) * 500;
-    
-    // Sombra del punto
-    const shadowGradient = ctx.createRadialGradient(x + 25, y + 25, radius * 0.2, x + 25, y + 25, radius * 1.3);
-    shadowGradient.addColorStop(0, "rgba(0,0,0,0.25)");
-    shadowGradient.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = shadowGradient;
-    ctx.beginPath();
-    ctx.arc(x + 25, y + 25, radius * 1.2, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Gradiente principal del punto
-    const spotGradient = ctx.createRadialGradient(x - 25, y - 25, radius * 0.15, x, y, radius);
-    const color1 = i % 2 === 0 ? accent : highlight;
-    const color2 = darkenColor(color1, 0.5);
-    spotGradient.addColorStop(0, lightenColor(color1, 0.2));
-    spotGradient.addColorStop(0.5, color1);
-    spotGradient.addColorStop(1, color2);
-    
-    ctx.fillStyle = spotGradient;
-    ctx.globalAlpha = 0.85;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Borde oscuro del punto
-    ctx.strokeStyle = darkenColor(color1, 0.6);
-    ctx.lineWidth = 2;
-    ctx.globalAlpha = 0.4;
-    ctx.stroke();
-    
-    // Brillo del punto
-    const shinGradient = ctx.createRadialGradient(x - 40, y - 40, radius * 0.05, x - 40, y - 40, radius * 0.7);
-    shinGradient.addColorStop(0, lightenColor(color1, 0.5));
-    shinGradient.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.fillStyle = shinGradient;
-    ctx.globalAlpha = 0.7;
-    ctx.beginPath();
-    ctx.arc(x - 40, y - 40, radius * 0.7, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
-
-  // Borde exterior con efecto de malla
+  // VENAS SECUNDARIAS: Líneas finas y transversales
+  ctx.strokeStyle = darkenColor(base, 0.5);
+  ctx.lineWidth = 3;
   ctx.globalAlpha = 0.5;
-  const edgeGradient = ctx.createLinearGradient(0, 0, 2048, 2048);
-  edgeGradient.addColorStop(0, lightenColor(highlight, 0.2));
-  edgeGradient.addColorStop(0.5, "transparent");
-  edgeGradient.addColorStop(1, darkenColor(base, 0.25));
-  ctx.strokeStyle = edgeGradient;
-  ctx.lineWidth = 100;
-  ctx.strokeRect(50, 50, 1948, 1948);
+  
+  for (let i = 0; i < 35; i++) {
+    const startX = 200 + Math.random() * 1600;
+    const startY = 200 + Math.random() * 1600;
+    
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    
+    // Venas que se curvan naturalmente
+    const angle = Math.atan2(1024 - startY, 1024 - startX);
+    const controlX = startX + Math.cos(angle + 0.3) * 400;
+    const controlY = startY + Math.sin(angle + 0.3) * 400;
+    const endX = startX + Math.cos(angle) * 600;
+    const endY = startY + Math.sin(angle) * 600;
+    
+    ctx.quadraticCurveTo(controlX, controlY, endX, endY);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // VENAS DE ORO DORADO: Detalles finales muy visibles
+  ctx.strokeStyle = "#ffd700";
+  ctx.lineWidth = 5;
+  ctx.globalAlpha = 0.8;
+  
+  // Resaltar las venas principales en dorado
+  mainVeins.forEach((vein) => {
+    ctx.beginPath();
+    ctx.moveTo(1024, 1024);
+    const endX = 1024 + Math.cos(vein.angle) * vein.length * 0.5;
+    const endY = 1024 + Math.sin(vein.angle) * vein.length * 0.8;
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
+  });
+  ctx.globalAlpha = 1;
+
+  // MANCHAS/SPOTS en los bordes (si aplica)
+  if ((options.spots ?? 0) > 0) {
+    const spots = options.spots ?? 5;
+    ctx.fillStyle = darkenColor(base, 0.8);
+    ctx.globalAlpha = 0.4;
+    
+    for (let i = 0; i < spots; i++) {
+      const angle = (i / spots) * Math.PI * 2;
+      const x = 1024 + Math.cos(angle) * 850;
+      const y = 1024 + Math.sin(angle) * 800;
+      const radius = 80 + Math.random() * 40;
+      
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // BORDE DEFINIDO: Marco marrón oscuro en los extremos
+  const borderGradient = ctx.createLinearGradient(0, 0, 2048, 2048);
+  borderGradient.addColorStop(0, darkenColor(base, 0.5));
+  borderGradient.addColorStop(0.5, "transparent");
+  borderGradient.addColorStop(1, darkenColor(base, 0.6));
+  
+  ctx.strokeStyle = borderGradient;
+  ctx.lineWidth = 150;
+  ctx.globalAlpha = 0.7;
+  ctx.strokeRect(75, 75, 1898, 1898);
   ctx.globalAlpha = 1;
 
   const texture = new CanvasTexture(canvas);
   texture.anisotropy = 16;
   texture.needsUpdate = true;
   return texture;
-}
-
-function usePhotoTexture(path?: string): Texture | null {
-  return useMemo(() => {
-    if (!path || typeof window === "undefined") return null;
-    const loader = new TextureLoader();
-    const texture = loader.load(path);
-    texture.colorSpace = SRGBColorSpace;
-    texture.anisotropy = 8;
-    texture.needsUpdate = true;
-    return texture;
-  }, [path]);
 }
