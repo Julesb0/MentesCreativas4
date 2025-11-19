@@ -17,6 +17,7 @@ const PLANETS = [
     rotationSpeed: 0.25,
     orbitalInclination: 7,
     glowColor: "#f8fafc",
+    videoId: "MzsbpWPBc0s",
   },
   {
     name: "Venus",
@@ -37,6 +38,7 @@ const PLANETS = [
     atmosphereColor: "#fde68a",
     atmosphereIntensity: 0.14,
     glowColor: "#fef9c3",
+    videoId: "ink28v2xlGY",
   },
   {
     name: "Tierra",
@@ -56,6 +58,7 @@ const PLANETS = [
     orbitalInclination: 0,
     atmosphereColor: "#bfdbfe",
     glowColor: "#93c5fd",
+    videoId: "vuW8YJ532g8",
   },
   {
     name: "Marte",
@@ -76,6 +79,7 @@ const PLANETS = [
     atmosphereColor: "#fecaca",
     atmosphereIntensity: 0.1,
     glowColor: "#f87171",
+    videoId: "RLky_HlOWRg",
   },
   {
     name: "Júpiter",
@@ -95,6 +99,7 @@ const PLANETS = [
     orbitalInclination: 1.3,
     atmosphereColor: "#fed7aa",
     glowColor: "#fbbf24",
+    videoId: "02oQIvTCzNI",
   },
   {
     name: "Saturno",
@@ -114,6 +119,7 @@ const PLANETS = [
     orbitalInclination: 2.5,
     atmosphereColor: "#fef3c7",
     glowColor: "#fde68a",
+    videoId: "SIxyMBjtPYw",
     ring: {
       innerScale: 1.5,
       outerScale: 2.8,
@@ -139,6 +145,7 @@ const PLANETS = [
     orbitalInclination: 0.8,
     atmosphereColor: "#bae6fd",
     glowColor: "#7dd3fc",
+    videoId: "dTU5TkW4U8E",
   },
   {
     name: "Neptuno",
@@ -158,11 +165,13 @@ const PLANETS = [
     orbitalInclination: 1.8,
     atmosphereColor: "#bfdbfe",
     glowColor: "#60a5fa",
+    videoId: "5vcqxZz89Z4",
   },
 ];
 
 export default function SolarView() {
   const [selectedPlanet, setSelectedPlanet] = useState<string>(PLANETS[2].name);
+  const [videoOpen, setVideoOpen] = useState(false);
   const activePlanet = useMemo(
     () => PLANETS.find((planet) => planet.name === selectedPlanet) ?? PLANETS[0],
     [selectedPlanet],
@@ -218,6 +227,12 @@ export default function SolarView() {
             </button>
           ))}
         </div>
+        <button
+          onClick={() => setVideoOpen(true)}
+          className="w-full rounded-2xl border border-blue-300/30 bg-blue-500/20 px-4 py-3 text-center font-semibold text-blue-100 transition hover:border-blue-300/60 hover:bg-blue-500/30"
+        >
+          ▶ Ver video sobre {activePlanet.name}
+        </button>
         <dl className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4">
             <dt className="text-xs uppercase tracking-[0.3em] text-blue-100/60">Duración del año</dt>
@@ -246,6 +261,38 @@ export default function SolarView() {
         </dl>
         <Quiz planetName={activePlanet.name} />
       </aside>
+      {videoOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={() => setVideoOpen(false)}
+        >
+          <div
+            className="w-full max-w-2xl rounded-2xl border border-white/20 bg-black shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 p-4">
+              <h3 className="text-lg font-semibold text-white">{activePlanet.name}</h3>
+              <button
+                onClick={() => setVideoOpen(false)}
+                className="text-2xl text-slate-400 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="aspect-video w-full bg-black">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${(activePlanet as any).videoId}?autoplay=1`}
+                title={`Video sobre ${activePlanet.name}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
