@@ -3,12 +3,11 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Butterfly from "../components/Butterfly";
 import { SPECIES, type ButterflySpecies } from "../data";
-import ButterflyQuiz from "../components/ButterflyQuiz";
 
 const PLAY_STEPS = [
   { emoji: "🦋", text: "1. Elige una mariposa" },
   { emoji: "💨", text: "2. Mueve su aleteo" },
-  { emoji: "🧠", text: "3. Contesta el reto" },
+  { emoji: "🔄", text: "3. Observa la simetría" },
 ];
 
 const speedLabel = (value: number) => {
@@ -190,24 +189,7 @@ export default function ButterfliesPage() {
               <li>Ajusta la velocidad para ver si el movimiento sigue sincronizado.</li>
             </ol>
           </article>
-          <article className="rounded-2xl border border-fuchsia-200/30 bg-fuchsia-900/30 p-4" aria-label="Guía de texturas fotográficas">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-fuchsia-100/70">Texturas</p>
-            <h4 className="text-sm font-semibold text-white">Mapeo fotográfico</h4>
-            <ul className="mt-2 space-y-1">
-              <li>1. Coloca tus fotos en <code>/public/textures/butterflies/</code>.</li>
-              <li>2. Usa el formato <code>{"{id}-fore.png"}</code> y <code>{"{id}-hind.png"}</code> (ej. <code>monarca-fore.png</code>).</li>
-              <li>3. Mantén proporción 1:1 y fondo transparente para alas delicadas.</li>
-              <li>4. Reinicia Vite/recarga para ver los cambios.</li>
-            </ul>
-          </article>
         </div>
-
-        <div className="rounded-2xl border border-dashed border-amber-200/40 bg-amber-500/10 p-4 text-sm text-amber-50">
-          <p className="font-semibold">Mini reto brillante</p>
-          <p className="text-xs text-amber-100/80">Las preguntas son súper fáciles. ¡Gana una estrella por cada respuesta correcta!</p>
-        </div>
-
-        <ButterflyQuiz />
       </aside>
     </div>
   );

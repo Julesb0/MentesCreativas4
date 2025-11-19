@@ -12,15 +12,12 @@ jest.mock("@react-three/drei", () => ({
 
 jest.mock("../components/Butterfly", () => () => <div data-testid="mock-butterfly" />);
 
-jest.mock("../components/ButterflyQuiz", () => () => <div data-testid="mock-quiz">Quiz</div>);
-
 describe("ButterfliesPage", () => {
 	it("muestra la especie por defecto y el encabezado principal", () => {
 		render(<ButterfliesPage />);
 		expect(screen.getByRole("heading", { level: 2, name: /Simetría en movimiento/i })).toBeInTheDocument();
 		expect(screen.getByRole("heading", { level: 3, name: SPECIES[0].nombre })).toBeInTheDocument();
 		expect(screen.getByText(/Ficha naturalista/i)).toBeInTheDocument();
-		expect(screen.getByTestId("mock-quiz")).toBeInTheDocument();
 	});
 
 	it("permite cambiar la tarjeta activa de mariposa", () => {
