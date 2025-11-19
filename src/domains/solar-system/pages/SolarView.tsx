@@ -13,6 +13,10 @@ const PLANETS = [
     yearLength: 88,
     dayLength: 59,
     radius: 2440,
+    axialTilt: 0.03,
+    rotationSpeed: 0.25,
+    orbitalInclination: 7,
+    glowColor: "#f8fafc",
   },
   {
     name: "Venus",
@@ -27,6 +31,12 @@ const PLANETS = [
     atmosphere: "96.5% CO₂, 3.5% N₂",
     avgTemp: 464,
     gravity: 8.87,
+    axialTilt: 177,
+    rotationSpeed: 0.08,
+    orbitalInclination: 3.4,
+    atmosphereColor: "#fde68a",
+    atmosphereIntensity: 0.14,
+    glowColor: "#fef9c3",
   },
   {
     name: "Tierra",
@@ -41,6 +51,11 @@ const PLANETS = [
     atmosphere: "78% N₂, 21% O₂, ~1% otros",
     avgTemp: 15,
     gravity: 9.81,
+    axialTilt: 23.4,
+    rotationSpeed: 1,
+    orbitalInclination: 0,
+    atmosphereColor: "#bfdbfe",
+    glowColor: "#93c5fd",
   },
   {
     name: "Marte",
@@ -55,6 +70,12 @@ const PLANETS = [
     atmosphere: "95% CO₂, 2.7% N₂, 1.6% Ar",
     avgTemp: -60,
     gravity: 3.71,
+    axialTilt: 25,
+    rotationSpeed: 0.9,
+    orbitalInclination: 1.8,
+    atmosphereColor: "#fecaca",
+    atmosphereIntensity: 0.1,
+    glowColor: "#f87171",
   },
   {
     name: "Júpiter",
@@ -69,6 +90,11 @@ const PLANETS = [
     atmosphere: "90% H₂, 10% He (trazas)",
     avgTemp: -110,
     gravity: 24.79,
+    axialTilt: 3,
+    rotationSpeed: 1.6,
+    orbitalInclination: 1.3,
+    atmosphereColor: "#fed7aa",
+    glowColor: "#fbbf24",
   },
   {
     name: "Saturno",
@@ -83,6 +109,17 @@ const PLANETS = [
     atmosphere: "96% H₂, 3% He (trazas)",
     avgTemp: -140,
     gravity: 10.44,
+    axialTilt: 26.7,
+    rotationSpeed: 1.4,
+    orbitalInclination: 2.5,
+    atmosphereColor: "#fef3c7",
+    glowColor: "#fde68a",
+    ring: {
+      innerScale: 1.5,
+      outerScale: 2.8,
+      color: "#fde68a",
+      opacity: 0.55,
+    },
   },
   {
     name: "Urano",
@@ -97,6 +134,11 @@ const PLANETS = [
     atmosphere: "H₂, He, CH₄",
     avgTemp: -195,
     gravity: 8.87,
+    axialTilt: 97.8,
+    rotationSpeed: 1.1,
+    orbitalInclination: 0.8,
+    atmosphereColor: "#bae6fd",
+    glowColor: "#7dd3fc",
   },
   {
     name: "Neptuno",
@@ -111,6 +153,11 @@ const PLANETS = [
     atmosphere: "H₂, He, CH₄",
     avgTemp: -200,
     gravity: 11.15,
+    axialTilt: 28.3,
+    rotationSpeed: 1.2,
+    orbitalInclination: 1.8,
+    atmosphereColor: "#bfdbfe",
+    glowColor: "#60a5fa",
   },
 ];
 
@@ -124,7 +171,7 @@ export default function SolarView() {
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
-      <section className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-blue-900/30">
+      <section className="flex min-h-[540px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-blue-900/30">
         <header className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 bg-gradient-to-r from-blue-600/40 via-blue-500/20 to-transparent px-6 py-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-blue-100/80">Exploración espacial</p>
@@ -134,7 +181,7 @@ export default function SolarView() {
             Pulsa sobre un planeta o selecciónalo desde la lista para ver sus datos principales.
           </p>
         </header>
-        <div className="h-[540px] bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+        <div className="flex-1 bg-gradient-to-b from-slate-900 via-slate-950 to-black">
           <SolarScene
             planets={PLANETS}
             selectedPlanet={selectedPlanet}

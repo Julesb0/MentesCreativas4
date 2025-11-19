@@ -1,0 +1,49 @@
+{
+  "fuente": "src/domains/shapes-3d/pages/Shapes3DPage.tsx",
+  "formas": [
+    {
+      "id": "cube",
+      "titulo": "Cubo interactivo",
+      "descripcion": "Todas sus caras son iguales. Observa cómo se mantiene la simetría.",
+      "formulas": {
+        "area": "6 * a^2",
+        "volumen": "a^3"
+      },
+      "tips": [
+        "Duplica la arista en el control para ver el efecto inmediato en el volumen",
+        "En composición, el cubo usa el color #64748b para diferenciarse"
+      ]
+    },
+    {
+      "id": "sphere",
+      "titulo": "Esfera luminosa",
+      "descripcion": "Cada punto está a la misma distancia del centro.",
+      "formulas": {
+        "area": "4 * pi * r^2",
+        "volumen": "4/3 * pi * r^3"
+      },
+      "tips": [
+        "La escena usa el color #ef4444 por defecto en modo composición",
+        "La simetría radial se aprecia mejor activando la opción de rotación"
+      ]
+    },
+    {
+      "id": "cylinder",
+      "titulo": "Cilindro perfecto",
+      "descripcion": "Tiene dos bases circulares paralelas y un cuerpo curvo.",
+      "formulas": {
+        "area": "2 * pi * r * (r + h)",
+        "volumen": "pi * r^2 * h"
+      },
+      "tips": [
+        "El radio y la altura se controlan por separado en la UI",
+        "En la composición B toma color #f59e0b para diferenciarse"
+      ]
+    }
+  ],
+  "metadatos": {
+    "compositionModes": ["A", "B"],
+    "propiedadesCompartidas": ["color", "direction", "positions"],
+    "ultimaActualizacion": "2025-11-19"
+  }
+}

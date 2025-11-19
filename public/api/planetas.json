@@ -1,0 +1,91 @@
+{
+  "fuente": "src/domains/solar-system/pages/SolarView.tsx",
+  "actualizado": "2025-11-19",
+  "planetas": [
+    {
+      "nombre": "Mercurio",
+      "descripcion": "Planeta rocoso y más cercano al Sol, con temperaturas extremas.",
+      "radioKm": 2440,
+      "duracionAnioDias": 88,
+      "duracionDiaDias": 59,
+      "color": "#9ca3af"
+    },
+    {
+      "nombre": "Venus",
+      "descripcion": "Cuerpo cubierto de nubes densas que generan el efecto invernadero más intenso.",
+      "radioKm": 6052,
+      "duracionAnioDias": 225,
+      "duracionDiaDias": 243,
+      "atmosfera": "96.5% CO2, 3.5% N2",
+      "temperaturaPromedioC": 464,
+      "gravedadMs2": 8.87,
+      "color": "#eab308"
+    },
+    {
+      "nombre": "Tierra",
+      "descripcion": "Nuestro planeta azul, único conocido con vida y grandes cantidades de agua líquida.",
+      "radioKm": 6371,
+      "duracionAnioDias": 365,
+      "duracionDiaDias": 1,
+      "atmosfera": "78% N2, 21% O2, ~1% otros",
+      "temperaturaPromedioC": 15,
+      "gravedadMs2": 9.81,
+      "color": "#3b82f6"
+    },
+    {
+      "nombre": "Marte",
+      "descripcion": "Planeta rojo, frío y polvoriento, con vestigios de agua helada.",
+      "radioKm": 3389,
+      "duracionAnioDias": 687,
+      "duracionDiaDias": 1.03,
+      "atmosfera": "95% CO2, 2.7% N2, 1.6% Ar",
+      "temperaturaPromedioC": -60,
+      "gravedadMs2": 3.71,
+      "color": "#ef4444"
+    },
+    {
+      "nombre": "Júpiter",
+      "descripcion": "Gigante gaseoso con la Gran Mancha Roja y un potente campo magnético.",
+      "radioKm": 69911,
+      "duracionAnioDias": 4333,
+      "duracionDiaDias": 0.41,
+      "atmosfera": "90% H₂, 10% He (trazas)",
+      "temperaturaPromedioC": -110,
+      "gravedadMs2": 24.79,
+      "color": "#d97706"
+    },
+    {
+      "nombre": "Saturno",
+      "descripcion": "Gigante gaseoso famoso por su sistema de anillos espectaculares.",
+      "radioKm": 58232,
+      "duracionAnioDias": 10759,
+      "duracionDiaDias": 0.45,
+      "atmosfera": "96% H₂, 3% He (trazas)",
+      "temperaturaPromedioC": -140,
+      "gravedadMs2": 10.44,
+      "color": "#fcd34d"
+    },
+    {
+      "nombre": "Urano",
+      "descripcion": "Gigante helado con inclinación extrema, rota prácticamente de lado.",
+      "radioKm": 25362,
+      "duracionAnioDias": 30687,
+      "duracionDiaDias": 0.72,
+      "atmosfera": "H₂, He, CH₄",
+      "temperaturaPromedioC": -195,
+      "gravedadMs2": 8.87,
+      "color": "#22d3ee"
+    },
+    {
+      "nombre": "Neptuno",
+      "descripcion": "Gigante helado azulado con vientos supersónicos y clima dinámico.",
+      "radioKm": 24622,
+      "duracionAnioDias": 60190,
+      "duracionDiaDias": 0.67,
+      "atmosfera": "H₂, He, CH₄",
+      "temperaturaPromedioC": -200,
+      "gravedadMs2": 11.15,
+      "color": "#2563eb"
+    }
+  ]
+}

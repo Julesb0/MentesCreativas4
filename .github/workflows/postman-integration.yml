@@ -32,6 +32,7 @@ jobs:
       - name: 📋 Run Postman Collection
         run: |
           newman run tests/postman/MentesCreativas.postman_collection.json \
+            --env-var baseUrl=https://mentes-creativas4.vercel.app \
             --reporters cli,html,json \
             --reporter-htmlextra-export ./postman-report.html \
             --reporter-json-export ./postman-report.json \
@@ -54,16 +55,17 @@ jobs:
             const data = JSON.parse(report);
             const stats = data.run.stats;
             
+            const runUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
             const comment = `## 🧪 Postman Integration Tests
             
-- ✅ Requests: ${stats.requests.total} total
-- ✅ Passed: ${stats.requests.total - stats.requests.failed}
-- ❌ Failed: ${stats.requests.failed}
-- ⏱️ Tests: ${stats.tests.total} total
-- ✓ Passed: ${stats.tests.total - stats.tests.failed}
-- ✗ Failed: ${stats.tests.failed}
+            - ✅ Requests: ${stats.requests.total} total
+            - ✅ Passed: ${stats.requests.total - stats.requests.failed}
+            - ❌ Failed: ${stats.requests.failed}
+            - ⏱️ Tests: ${stats.tests.total} total
+            - ✓ Passed: ${stats.tests.total - stats.tests.failed}
+            - ✗ Failed: ${stats.tests.failed}
 
-[📊 Detailed Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            [📊 Detailed Report](${runUrl})`;
             
             github.rest.issues.createComment({
               issue_number: context.issue.number,

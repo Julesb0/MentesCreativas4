@@ -1,0 +1,68 @@
+{
+  "fuente": "src/domains/butterflies/data.ts",
+  "total": 5,
+  "actualizado": "2025-11-19",
+  "especies": [
+    {
+      "id": "monarca",
+      "nombre": "Monarca",
+      "region": "América del Norte (migraciones a México)",
+      "envergaduraCm": 10.5,
+      "pesoMg": 500,
+      "nota": "Viaja miles de kilómetros hasta México para pasar el invierno.",
+      "texturas": {
+        "fore": "/textures/butterflies/monarca-fore.png",
+        "hind": "/textures/butterflies/monarca-hind.png"
+      }
+    },
+    {
+      "id": "morpho",
+      "nombre": "Morpho Azul",
+      "region": "Selvas tropicales de Centro y Sudamérica",
+      "envergaduraCm": 12.0,
+      "pesoMg": 800,
+      "nota": "Sus alas azules brillan como un espejo cuando les da la luz.",
+      "texturas": {
+        "fore": "/textures/butterflies/morpho-fore.png",
+        "hind": "/textures/butterflies/morpho-hind.png"
+      }
+    },
+    {
+      "id": "atlas",
+      "nombre": "Atlas Gigante",
+      "region": "Sudeste Asiático",
+      "envergaduraCm": 25.0,
+      "pesoMg": 2500,
+      "nota": "Es enorme; sus puntas parecen cabezas de serpiente para asustar.",
+      "texturas": {
+        "fore": "/textures/butterflies/atlas-fore.png",
+        "hind": "/textures/butterflies/atlas-hind.png"
+      }
+    },
+    {
+      "id": "glasswing",
+      "nombre": "Glasswing (Greta oto)",
+      "region": "Bosques húmedos de Centroamérica",
+      "envergaduraCm": 5.6,
+      "pesoMg": 180,
+      "nota": "Tiene alas transparentes, ¡casi invisibles!",
+      "translucida": true,
+      "texturas": {
+        "fore": "/textures/butterflies/glasswing-fore.png",
+        "hind": "/textures/butterflies/glasswing-hind.png"
+      }
+    },
+    {
+      "id": "ulysses",
+      "nombre": "Ulysses (Papilio ulysses)",
+      "region": "Bosques tropicales de Australia y Papúa",
+      "envergaduraCm": 12.0,
+      "pesoMg": 900,
+      "nota": "Sus alas azules parecen olas brillantes en el bosque.",
+      "texturas": {
+        "fore": "/textures/butterflies/ulysses-fore.png",
+        "hind": "/textures/butterflies/ulysses-hind.png"
+      }
+    }
+  ]
+}

@@ -1,16 +1,138 @@
 {
   "info": {
-    "name": "Mentes Creativas Collection",
-    "description": "Test collection for Mentes Creativas API"
+    "name": "Mentes Creativas API Suite",
+    "description": "Colección para validar los datos estáticos expuestos en /public/api.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Sistema Solar API",
+      "name": "Planetas - catálogo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('tiempo de respuesta < 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });",
+              "const body = pm.response.json();",
+              "pm.test('estructura de planetas', function () {",
+              "  pm.expect(body).to.have.property('planetas');",
+              "  pm.expect(body.planetas.length).to.eql(8);",
+              "});",
+              "pm.test('cada planeta tiene nombre y radio', function () {",
+              "  body.planetas.forEach((planet) => {",
+              "    pm.expect(planet).to.have.property('nombre');",
+              "    pm.expect(planet).to.have.property('radioKm');",
+              "  });",
+              "});"
+            ]
+          }
+        }
+      ],
       "request": {
-        "url": "http://localhost:5000/api/planetas",
-        "method": "GET"
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/planetas.json",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "planetas.json"
+          ]
+        }
       },
       "response": []
+    },
+    {
+      "name": "Figuras 3D - fórmulas",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('incluye cube, sphere y cylinder', function () {",
+              "  const ids = body.formas.map((f) => f.id);",
+              "  pm.expect(ids).to.include.members(['cube', 'sphere', 'cylinder']);",
+              "});",
+              "pm.test('cada forma expone formulas', function () {",
+              "  body.formas.forEach((forma) => {",
+              "    pm.expect(forma.formulas).to.have.property('area');",
+              "    pm.expect(forma.formulas).to.have.property('volumen');",
+              "  });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/figuras.json",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "figuras.json"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Mariposas - especies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('total coincide con cantidad', function () {",
+              "  pm.expect(body.total).to.eql(body.especies.length);",
+              "});",
+              "pm.test('hay exactamente 5 especies', function () {",
+              "  pm.expect(body.especies.length).to.eql(5);",
+              "});",
+              "pm.test('cada especie tiene texturas', function () {",
+              "  body.especies.forEach((especie) => {",
+              "    pm.expect(especie.texturas).to.have.property('fore');",
+              "    pm.expect(especie.texturas).to.have.property('hind');",
+              "  });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/mariposas.json",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "mariposas.json"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5173"
     }
   ]
 }
